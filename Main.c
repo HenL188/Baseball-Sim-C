@@ -7,9 +7,34 @@
 
 int main() {
 	
+	printf("Calculating...\n");
 	while (teamOuts > 0)
 	{
-		while (inningsOuts > 0) {
+		while (teamOuts > 24) {
+			Hitter();
+		}
+		while (teamOuts > 21) {
+			Hitter();
+		}
+		while (teamOuts > 18) {
+			Hitter();
+		}
+		while (teamOuts > 15) {
+			Hitter();
+		}
+		while (teamOuts > 12) {
+			Hitter();
+		}
+		while (teamOuts > 9) {
+			Hitter();
+		}
+		while (teamOuts > 6) {
+			Hitter();
+		}
+		while (teamOuts > 3) {
+			Hitter();
+		}
+		while (teamOuts <= 3  && teamOuts > 0) {
 			Hitter();
 		}
 	}
@@ -195,7 +220,6 @@ bool StrikeOut(float f) {
 	float strikeOutRate = Rate();
 	bool strikeout = false;
 	if (strikeOutRate < f) {
-		inningsOuts -= 1;
 		teamOuts -= 1;
 		strikeout = true;
 		return strikeout;
@@ -206,20 +230,20 @@ bool StrikeOut(float f) {
 bool GroundOut(float f) {
 	float groundOutRate = Rate();
 	bool groundOut = false;
+	srand(time(0));
+	int ground = rand() % 10;
 
 	if (groundOutRate < f) {
 
-		if (firstBase == true && inningsOuts <= 2) {
+		if (firstBase == true && ground <= 1) {
 			firstBase = false;
-			inningsOuts -= 2;
 			teamOuts -= 2;
 			groundOut = true;
 			return groundOut;
+			teamOuts -= 1;
 		}
-		inningsOuts -= 1;
-		teamOuts -= 1;
+		return groundOut;
 	}
-	return groundOut;
 }
 
 bool FlyOut(float f) {
@@ -227,14 +251,12 @@ bool FlyOut(float f) {
 	bool flyOut = false;
 
 	if (flyout < f && firstBase == true) {
-		inningsOuts -= 1;
 		teamOuts -= 1;
 		secoundBase = true;
 		flyOut = true;
 		return flyOut;
 	}
 	else if (flyout < f && firstBase == true && secoundBase == true) {
-		inningsOuts -= 1;
 		teamOuts -= 1;
 		secoundBase = true;
 		thirdBase = true;
@@ -242,7 +264,6 @@ bool FlyOut(float f) {
 		return flyOut;
 	}
 	else if (flyout < f && firstBase == true && secoundBase == true && thirdBase == true) {
-		inningsOuts -= 1;
 		teamOuts -= 1;
 		secoundBase = true;
 		thirdBase = true;
@@ -251,7 +272,6 @@ bool FlyOut(float f) {
 		return flyOut;
 	}
 	else if (flyout < f && firstBase == true && thirdBase == true) {
-		inningsOuts -= 1;
 		teamOuts -= 1;
 		secoundBase = true;
 		score += 1;
@@ -259,21 +279,18 @@ bool FlyOut(float f) {
 		return flyOut;
 	}
 	else if (flyout < f && secoundBase == true) {
-		inningsOuts -= 1;
 		teamOuts -= 1;
 		thirdBase = true;
 		flyOut = true;
 		return flyOut;
 	}
 	else if (flyout < f && thirdBase == true) {
-		inningsOuts -= 1;
 		teamOuts -= 1;
 		score += 1;
 		flyOut = true;
 		return flyOut;
 	}
 	else if (flyout < f && thirdBase == true && secoundBase == true) {
-		inningsOuts -= 1;
 		teamOuts -= 1;
 		thirdBase = true;
 		score += 1;
@@ -281,7 +298,6 @@ bool FlyOut(float f) {
 		return flyOut;
 	}
 	else if (flyout < f) {
-		inningsOuts -= 1;
 		teamOuts -= 1;
 		flyOut = true;
 		return flyOut;
@@ -294,7 +310,6 @@ bool PopUp(float f) {
 	bool popOut = false;
 
 	if (popOutRate < f) {
-		inningsOuts -= 1;
 		teamOuts -= 1;
 		popOut = true;
 		return popOut;
@@ -307,7 +322,6 @@ bool LineDrive(float f) {
 	bool lineDrive = false;
 
 	if (lineDriveRate < f) {
-		inningsOuts -= 1;
 		teamOuts -= 1;
 		lineDrive = true;
 		return lineDrive;
@@ -348,7 +362,7 @@ void Hitter() {
 					printf("Strike :(\n");
 				}
 				bool ground = GroundOut(3.28);
-				if (ground == true && strike == false) {
+				if (strike == false && ground == true) {
 					printf("Ground Out :(\n");
 				}
 				bool fly = FlyOut(2.13);
@@ -363,10 +377,6 @@ void Hitter() {
 				if (pop == true && strike == false && fly == false && line == false && ground == false) {
 					printf("Popup :(\n");
 				}
-			}
-
-			if (inningsOuts == 0) {
-				inningsOuts += 3;
 			}
 }
 
